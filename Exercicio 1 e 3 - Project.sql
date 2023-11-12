@@ -67,15 +67,15 @@ VALUES ('Aparecido', 'Rh_apareci', '55@!cido', 'aparecido@empresa.com')
 /*
 --BULK INSERT
 INSERT INTO projects VALUES
-('Re-folha', 'RefatoraÁ„o das Folhas', '2014-09-05'),
-('ManutenÁ„o PC¥s', 'ManutenÁ„o PC¥s', '2014-09-06'),
+('Re-folha', 'Refatora√ß√£o das Folhas', '2014-09-05'),
+('Manuten√ß√£o PC¬¥s', 'Manuten√ß√£o PC¬¥s', '2014-09-06'),
 ('Auditoria', Null, '2014-09-07')
 */
 INSERT INTO projects (name, description, date)
-VALUES ('Re-folha', 'RefatoraÁ„o das Folhas', '2014-09-05')
+VALUES ('Re-folha', 'Refatora√ß√£o das Folhas', '2014-09-05')
 
 INSERT INTO projects (name, description, date)
-VALUES ('ManutenÁ„o PC¥s', 'ManutenÁ„o PC¥s', '2014-09-06')
+VALUES ('Manuten√ß√£o PC¬¥s', 'Manuten√ß√£o PC¬¥s', '2014-09-06')
 
 ALTER TABLE projects
 ALTER COLUMN description VARCHAR(45) NULL;
@@ -92,7 +92,7 @@ INSERT INTO users_has_projects VALUES
 (2,10002)
 
 -- Fazer uma consulta que retorne id, nome, email, username e caso a senha seja diferente de
---123mudar, mostrar ******** (8 asteriscos), caso contr·rio, mostrar a prÛpria senha.
+--123mudar, mostrar ******** (8 asteriscos), caso contr√°rio, mostrar a pr√≥pria senha.
 
 SELECT 
     id,
@@ -106,7 +106,7 @@ SELECT
 FROM users;
 
 /* Considerando que o projeto 10001 durou 15 dias, fazer uma consulta que mostre o nome do
-projeto, descriÁ„o, data, data_final do projeto realizado por usu·rio de e-mail
+projeto, descri√ß√£o, data, data_final do projeto realizado por usu√°rio de e-mail
 aparecido@empresa.com
 */
 SELECT
@@ -128,7 +128,7 @@ AND id IN
     )
 );
 
--- Fazer uma consulta que retorne o nome e o email dos usu·rios que est„o envolvidos no
+-- Fazer uma consulta que retorne o nome e o email dos usu√°rios que est√£o envolvidos no
 --projeto de nome Auditoria
 
 SELECT
@@ -147,8 +147,8 @@ WHERE id IN
     )
 );
 
-/*Considerando que o custo di·rio do projeto, cujo nome tem o termo ManutenÁ„o, È de 79.85
-e ele deve finalizar 16/09/2014, consultar, nome, descriÁ„o, data, data_final e custo_total do
+/*Considerando que o custo di√°rio do projeto, cujo nome tem o termo Manuten√ß√£o, √© de 79.85
+e ele deve finalizar 16/09/2014, consultar, nome, descri√ß√£o, data, data_final e custo_total do
 projeto
 */
 
@@ -162,7 +162,7 @@ SELECT
 
 	'R$ ' + CAST(CAST(79.85 * DATEDIFF(DAY, date, '2014-09-16') AS DECIMAL(7,2)) AS VARCHAR(8)) AS Valor_Tota
 FROM projects 
-WHERE name LIKE '%ManutenÁ„o%'
+WHERE name LIKE '%Manuten√ß√£o%'
 
 -- Fazer:
 
@@ -175,14 +175,14 @@ VALUES ('Joao', 'Ti_joao', '123mudar', 'joao@empresa.com')
 
 
 --b) Adicionar Project
---(10004; AtualizaÁ„o de Sistemas; ModificaÁ„o de Sistemas Operacionais nos PC's; 12/09/2014)
+--(10004; Atualiza√ß√£o de Sistemas; Modifica√ß√£o de Sistemas Operacionais nos PC's; 12/09/2014)
 INSERT INTO projects (name, description, date)
-VALUES ('AtualizaÁ„o de Sistemas', 'ModificaÁ„o de Sistemas Operacionais nos PC''s', '2014-09-12')
+VALUES ('Atualiza√ß√£o de Sistemas', 'Modifica√ß√£o de Sistemas Operacionais nos PC''s', '2014-09-12')
 
---ExercÌcios DDL e DML ñ Banco de Dados Fatec ZL
+--Exerc√≠cios DDL e DML ‚Äì Banco de Dados Fatec ZL
 
 --c) Consultar:
---1) Id, Name e Email de Users, Id, Name, Description e Data de Projects, dos usu·rios que
+--1) Id, Name e Email de Users, Id, Name, Description e Data de Projects, dos usu√°rios que
 --participaram do projeto Name Re-folha
 
 SELECT
@@ -191,7 +191,7 @@ SELECT
     u.email AS E_mail,
     p.id AS Id_Projeto,
     p.name AS Nome_Projeto,
-    p.description AS DescriÁ„o
+    p.description AS Descri√ß√£o
 FROM
     users u INNER JOIN users_has_projects up ON u.id = up.id_users
     INNER JOIN
@@ -200,26 +200,26 @@ WHERE
     p.name = 'Re-folha';
 
 	
---2) Name dos Projects que n„o tem Users
+--2) Name dos Projects que n√£o tem Users
 SELECT p.id AS id_projeto,
        p.name AS nome_projeto
 FROM  projects p LEFT OUTER JOIN users_has_projects up ON p.id = up.id_projects
 WHERE up.id_users IS NULL
---3) Name dos Users que n„o tem Projects
+--3) Name dos Users que n√£o tem Projects
 SELECT u.id_user,
        u.nome
 FROM usuario u LEFT OUTER JOIN projeto p
 ON u.id_user = p.id
 WHERE p.id IS NULL
 
---Quantos projetos n„o tem usu·rios associados a ele. A coluna deve chamar qty_projects_no_users
-SELECT COUNT(*) AS qty_projects_no_users
+--Quantos projetos n√£o tem usu√°rios associados a ele. A coluna deve chamar qty_projects_no_users
+SELECT COUNT(p.id) AS qty_projects_no_users
 FROM  projects p LEFT OUTER JOIN users_has_projects up ON p.id = up.id_projects
 WHERE up.id_users IS NULL
 
---Id do projeto, nome do projeto, qty_users_project (quantidade de usu·rios por
---projeto) em ordem alfabÈtica crescente pelo nome do projeto
-SELECT COUNT(*) AS qty_projects_no_users,
+--Id do projeto, nome do projeto, qty_users_project (quantidade de usu√°rios por
+--projeto) em ordem alfab√©tica crescente pelo nome do projeto
+SELECT COUNT(p.id) AS qty_projects_no_users,
        p.id AS id_projeto,
        p.name AS nome_projeto
 FROM  projects p LEFT OUTER JOIN users_has_projects up ON p.id = up.id_projects
